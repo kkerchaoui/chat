@@ -12,7 +12,7 @@ var server = http.createServer(function(req, res) {
 // Chargement de socket.io
 var io = require('socket.io').listen(server);
 
-// Quand un client se connecte, on envoi un message
+// Quand un client se connecte, on envoi un messages
 io.sockets.on('connection', function (socket) {
    
 
