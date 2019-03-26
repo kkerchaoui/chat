@@ -41,6 +41,7 @@ io.sockets.on("connection", function(socket) {
   });
 
   socket.on("disconnect", function() {
+    // eslint-disable-next-line no-console
     console.log(socket.pseudo + " est partit");
   });
 });
