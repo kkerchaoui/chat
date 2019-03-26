@@ -1,167 +1,201 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title id="titleChat" >Chat - Non connecté</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title id="titleChat">Chat - Non connecté</title>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    </head>
-    <body>
-        <!-- Always shows a header, even in smaller screens. -->
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-          <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-              <!-- Title -->
-              <span class="mdl-layout-title"><h4>RealTime Chat</h4></span>
-              <!-- Add spacer, to align navigation to the right -->
-              <div class="mdl-layout-spacer"></div>
-              <!-- Navigation. We hide it in small screens. -->
-              <nav class="mdl-navigation mdl-layout--large-screen-only">
-              </nav>
-            </div>
-          </header>
-          <main class="mdl-layout__content">
-            <div class="page-content">
-
-                <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--9-col">
-
-                        <div id="zoneChat">
-                            <div id='titreCo'></div>
-                            
-                        </div>
-                        <br>
-                        <form  method="post" action="/" id="chatForm" >
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
-                                <input class="mdl-textfield__input"  type="text"  id="textMessage" autofocus="true" >
-                                <label class="mdl-textfield__label" for="textMessage">Votre message...</label>
-                            </div>
-                               <input type="submit"  id="sendMessage" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"  value="Envoyer">  
-                        </form>
-                        <br>    
-                            <input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="btnExit" value="Quitter" onclick="leave();">
-                             <input type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="btnReco" style="display: none;" value="Se reconnecter" onclick="joinChat();">
-                    </div>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"
+    />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </head>
+  <body>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title"><h4>RealTime Chat</h4></span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only"></nav>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--9-col">
+              <div id="zoneChat">
+                <div id="titreCo"></div>
+              </div>
+              <br />
+              <form method="post" action="/" id="chatForm">
+                <div
+                  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                >
+                  <input
+                    class="mdl-textfield__input"
+                    type="text"
+                    id="textMessage"
+                    autofocus="true"
+                  />
+                  <label class="mdl-textfield__label" for="textMessage"
+                    >Votre message...</label
+                  >
                 </div>
-
-                <!-- Wide card with share menu button -->
-                <style>
-                    .text-receive{
-                        font-size: 19px;
-                    }
-                     .text-write {
-                        color: #CD8C95;
-                        font-size: 19px;
-                    }
-                    .text-join{
-                        color: grey;
-                        
-                    }
-                </style>             
-           
+                <input
+                  type="submit"
+                  id="sendMessage"
+                  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                  value="Envoyer"
+                />
+              </form>
+              <br />
+              <input
+                type="button"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                id="btnExit"
+                value="Quitter"
+                onclick="leave();"
+              />
+              <input
+                type="button"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                id="btnReco"
+                style="display: none;"
+                value="Se reconnecter"
+                onclick="joinChat();"
+              />
             </div>
+          </div>
+
+          <!-- Wide card with share menu button -->
+          <style>
+            .text-receive {
+              font-size: 19px;
+            }
+            .text-write {
+              color: #cd8c95;
+              font-size: 19px;
+            }
+            .text-join {
+              color: grey;
+            }
+          </style>
+        </div>
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>
-            var socket = io.connect('http://192.168.191.10:8080',{reconnection:true});
-            var pseudo = prompt('Quel est votre pseudo?');
+          var socket = io.connect("http://192.168.191.10:8080", {
+            reconnection: true
+          });
+          var pseudo = prompt("Quel est votre pseudo?");
 
-               socket.emit('nouvelle_couleur',getRandomColor());
-                   
+          socket.emit("nouvelle_couleur", getRandomColor());
 
-            if (pseudo){
-                var labelWelcome = document.createElement('label');
-                labelWelcome.id="msgWelcome";
-                labelWelcome.innerHTML= '<h4><b>' + pseudo + '</b> bienvenue sur le chat !</h4>';
-                document.getElementById('titreCo').appendChild(labelWelcome);
+          if (pseudo) {
+            var labelWelcome = document.createElement("label");
+            labelWelcome.id = "msgWelcome";
+            labelWelcome.innerHTML =
+              "<h4><b>" + pseudo + "</b> bienvenue sur le chat !</h4>";
+            document.getElementById("titreCo").appendChild(labelWelcome);
 
-                document.title = pseudo + ' - Connecté';
-                socket.emit('nouveau_pseudo',pseudo);
-                socket.emit('connexion','<i><b>' + pseudo + '</b> a rejoint le chat</i>');
-           
-                socket.on('connexion', function(connexion){
-                 
-                    var labelCo = document.createElement('label');
-                    labelCo.className='text-join'; 
-                    labelCo.innerHTML= '<br>' + connexion;
-                    document.getElementById('zoneChat').appendChild(labelCo);
-               })
+            document.title = pseudo + " - Connecté";
+            socket.emit("nouveau_pseudo", pseudo);
+            socket.emit(
+              "connexion",
+              "<i><b>" + pseudo + "</b> a rejoint le chat</i>"
+            );
 
-                socket.on('message', function (message) {
-                    var msgReceive = document.createElement('label');
-                    msgReceive.className='text-receive'; 
-                    msgReceive.innerHTML= '<br>' + message;
-                    document.getElementById('zoneChat').appendChild(msgReceive);
-                })
-                
-                $('#sendMessage').click(function() {
-                    var inputMsg = document.getElementById('textMessage').value;
+            socket.on("connexion", function(connexion) {
+              var labelCo = document.createElement("label");
+              labelCo.className = "text-join";
+              labelCo.innerHTML = "<br>" + connexion;
+              document.getElementById("zoneChat").appendChild(labelCo);
+            });
 
-                    if (inputMsg != ''){
-                        socket.emit('message',inputMsg);
-                        document.getElementById('textMessage').value='';
-                        var msgSend = document.createElement('label');
-                        msgSend.className='text-write';
-                        msgSend.innerHTML= '<br><b>Vous</b>: '+ inputMsg;
-                        document.getElementById('zoneChat').appendChild(msgSend);
-                    }else{
-                        alert('Vous devez entrer un message !')
-                    }
-                    return false;
-                })
-             }
+            socket.on("message", function(message) {
+              var msgReceive = document.createElement("label");
+              msgReceive.className = "text-receive";
+              msgReceive.innerHTML = "<br>" + message;
+              document.getElementById("zoneChat").appendChild(msgReceive);
+            });
 
-                function getRandomColor() {
-                    var letters = '0123456789ABCDEF';
-                    var color = '#';
-                    for (var i = 0; i < 6; i++) {
-                        color += letters[Math.floor(Math.random() * 16)];
-                    }
-                    return color;
-                }
+            $("#sendMessage").click(function() {
+              var inputMsg = document.getElementById("textMessage").value;
 
+              if (inputMsg != "") {
+                socket.emit("message", inputMsg);
+                document.getElementById("textMessage").value = "";
+                var msgSend = document.createElement("label");
+                msgSend.className = "text-write";
+                msgSend.innerHTML = "<br><b>Vous</b>: " + inputMsg;
+                document.getElementById("zoneChat").appendChild(msgSend);
+              } else {
+                alert("Vous devez entrer un message !");
+              }
+              return false;
+            });
+          }
 
-                function joinChat(){
-                    var socket = io.connect('http://192.168.191.10:8080');
-                    var pseudo = prompt('Quel est votre pseudo?');
+          function getRandomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
 
-                    socket.connect();
+          function joinChat() {
+            var socket = io.connect("http://192.168.191.10:8080");
+            var pseudo = prompt("Quel est votre pseudo?");
 
-                    document.getElementById('msgWelcome').remove();
-                    var labelWelcome = document.createElement('label');
-                    labelWelcome.id="msgWelcome";
-                    labelWelcome.innerHTML= '<h4><b>' + pseudo + '</b> bienvenue sur le chat !</h4>';
-                    document.getElementById('titreCo').appendChild(labelWelcome);
+            socket.connect();
 
-                    document.title = pseudo + ' - Connecté';
+            document.getElementById("msgWelcome").remove();
+            var labelWelcome = document.createElement("label");
+            labelWelcome.id = "msgWelcome";
+            labelWelcome.innerHTML =
+              "<h4><b>" + pseudo + "</b> bienvenue sur le chat !</h4>";
+            document.getElementById("titreCo").appendChild(labelWelcome);
 
-                    socket.emit('nouveau_pseudo',pseudo);
-                    socket.emit('connexion','<i><b>' + pseudo + '</b> a rejoint le chat</i>');
+            document.title = pseudo + " - Connecté";
 
-                    document.getElementById('zoneChat').style.display='block';
-                    document.getElementById('chatForm').style.display='block';
-                    document.getElementById('btnExit').style.display='block';
-                    document.getElementById('btnReco').style.display='none';
+            socket.emit("nouveau_pseudo", pseudo);
+            socket.emit(
+              "connexion",
+              "<i><b>" + pseudo + "</b> a rejoint le chat</i>"
+            );
 
-                }
+            document.getElementById("zoneChat").style.display = "block";
+            document.getElementById("chatForm").style.display = "block";
+            document.getElementById("btnExit").style.display = "block";
+            document.getElementById("btnReco").style.display = "none";
+          }
 
-                function leave(){
-                    socket.emit('connexion','<i><b>' + pseudo + '</b> a quitté le chat</i>');
-                    socket.disconnect();
-                    document.title = 'Chat - Non Connecté';
-                    document.getElementById('zoneChat').style.display='none';
-                    document.getElementById('chatForm').style.display='none';
-                    document.getElementById('btnExit').style.display='none';
-                    document.getElementById('btnReco').style.display='block';
-                }
-              
-             
+          function leave() {
+            socket.emit(
+              "connexion",
+              "<i><b>" + pseudo + "</b> a quitté le chat</i>"
+            );
+            socket.disconnect();
+            document.title = "Chat - Non Connecté";
+            document.getElementById("zoneChat").style.display = "none";
+            document.getElementById("chatForm").style.display = "none";
+            document.getElementById("btnExit").style.display = "none";
+            document.getElementById("btnReco").style.display = "block";
+          }
         </script>
-          </main>
-        </div>
-    </body>
+      </main>
+    </div>
+  </body>
 </html>
