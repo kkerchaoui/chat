@@ -76,7 +76,7 @@
             </div>
           </div>
 
-          <!-- Wide card with share menu button -->
+         
           <style>
             .text-receive {
               font-size: 19px;
@@ -115,25 +115,30 @@
               "<i><b>" + pseudo + "</b> a rejoint le chat</i>"
             );
 
-            socket.on("connexion", function(connexion) {
+            window.onblur = () => {
+              socket.on("message", message => {
+                document.title = "Nouveau msg";
+              });
+            };
+            window.onfocus = () => {
+              document.title = pseudo + " - Chat";
+            };
+
+            socket.on("connexion", (connexion) => {
               var labelCo = document.createElement("label");
               labelCo.className = "text-join";
               labelCo.innerHTML = "<br>" + connexion;
               document.getElementById("zoneChat").appendChild(labelCo);
             });
 
-            socket.on("message", function(message) {
+            socket.on("message", (message) => {
               var msgReceive = document.createElement("label");
               msgReceive.className = "text-receive";
               msgReceive.innerHTML = "<br>" + message;
               document.getElementById("zoneChat").appendChild(msgReceive);
-
-              window.addEventListener("blur", function() {
-                document.title = "Nouveau Message " + pseudo;
-              });
             });
 
-            $("#sendMessage").click(function() {
+            $("#sendMessage").click(() => {
               var inputMsg = document.getElementById("textMessage").value;
 
               if (inputMsg != "") {
