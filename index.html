@@ -76,7 +76,6 @@
             </div>
           </div>
 
-         
           <style>
             .text-receive {
               font-size: 19px;
@@ -115,23 +114,14 @@
               "<i><b>" + pseudo + "</b> a rejoint le chat</i>"
             );
 
-            window.onblur = () => {
-              socket.on("message", message => {
-                document.title = "Nouveau msg";
-              });
-            };
-            window.onfocus = () => {
-              document.title = pseudo + " - Chat";
-            };
-
-            socket.on("connexion", (connexion) => {
+            socket.on("connexion", connexion => {
               var labelCo = document.createElement("label");
               labelCo.className = "text-join";
               labelCo.innerHTML = "<br>" + connexion;
               document.getElementById("zoneChat").appendChild(labelCo);
             });
 
-            socket.on("message", (message) => {
+            socket.on("message", message => {
               var msgReceive = document.createElement("label");
               msgReceive.className = "text-receive";
               msgReceive.innerHTML = "<br>" + message;
@@ -153,6 +143,15 @@
               }
               return false;
             });
+
+            window.onblur = () => {
+              socket.on("message", message => {
+                document.title = "Nouveau msg";
+              });
+            };
+            window.onfocus = () => {
+              document.title = pseudo + " - Chat";
+            };
           }
 
           function getRandomColor() {
@@ -165,8 +164,7 @@
           }
 
           function joinChat() {
-            var socket = io.connect("http://localhost:8080");
-            var pseudo = prompt("Quel est votre pseudo?");
+            pseudo = prompt("Quel est votre pseudo?");
 
             socket.connect();
 
