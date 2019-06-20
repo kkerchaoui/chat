@@ -42,7 +42,7 @@ io.sockets.on("connection", socket => {
 
   socket.on("disconnect", () => {
     // eslint-disable-next-line no-console
-    console.log(socket.pseudo + " est partit");
+    console.log(socket.pseudo + " est partits");
   });
 });
 
