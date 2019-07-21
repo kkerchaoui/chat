@@ -1,14 +1,29 @@
 {
-    "name": "super-chat",
-    "version": "0.1.0",
+    "name": "chat",
+    "version": "1.0.0",
+    "description": "Real-time chat app",
+    "main": "app.js",
+    "private": true,
+    "scripts": {
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kkerchaoui/chat.git"
+    },
+    "keywords": [],
+    "author": "Khelil Kerchaoui <khelil.k@gmail.com> (https://kkerchaoui.com)",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kkerchaoui/chat/issues"
+    },
+    "homepage": "https://github.com/kkerchaoui/chat",
     "dependencies": {
         "express": "~3.3.4",
         "js-yaml": "^3.13.1",
         "socket.io": "^1.7.4",
         "ws": "^7.0.1"
     },
-    "author": "KEN <khelil.k@gmail.com>",
-    "description": "Un super Chat temps réel avec socket.io",
     "devDependencies": {
         "eslint": "^5.16.0"
     }
