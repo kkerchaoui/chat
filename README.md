@@ -1,7 +1,7 @@
 # Real-time Chat App
 Real-time Chat made with NodeJs using socket.io
 
-# HOW TO  4 STEPS (UNIX CLI)
+# HOW TO  4 STEPS 
 
 ### I - Clone repo
 
