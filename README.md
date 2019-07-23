@@ -1,7 +1,7 @@
 # Real-time Chat App
 Real-time Chat made with NodeJs using socket.io
 
-# HOW TO - 3 STEPS 
+# QUickstart - 3 Steps 
 
 ### I - Clone repo
 ```
