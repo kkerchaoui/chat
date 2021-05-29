@@ -22,7 +22,7 @@
         "express": "~3.3.4",
         "js-yaml": "^3.13.1",
         "socket.io": "^1.7.4",
-        "ws": "^7.0.1"
+        "ws": "^7.4.6"
     },
     "devDependencies": {
         "eslint": "^5.16.0"
