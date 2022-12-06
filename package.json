@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/kkerchaoui/chat",
     "dependencies": {
-        "express": "~3.3.4",
+        "express": "~4.17.3",
         "js-yaml": "^3.13.1",
         "socket.io": "^1.7.4",
         "ws": "^7.0.1"
